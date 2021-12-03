@@ -1003,19 +1003,19 @@ const binaryArray = `010000010010
   binArray = Arr.map((bin) => bin.trim());
 
   function binRate(arr){
-    //x ++ for 1s and y ++ for 0s
-    //take the first number, add 1s add 0s whatever's bigger push to array
+    //ones ++ for 1s and zeros ++ for 0s
+    //take the first number, add 1s add 0s... whatever's bigger push to array
     const gammaRate = [];
     const epsilonRate = [];
     for (let strIter = 0; strIter < arr[0].length; strIter++){
-      let x = 0;
-      let y = 0;
+      let ones = 0;
+      let zeros = 0;
       for(let i = 0; i<arr.length; i++){ 
         if (arr[i][strIter] === '1'){
-          x++
-        } else { y++ }
+          ones++
+        } else { zeros++ }
       }
-      if (x>y){
+      if (ones>zeros){
         gammaRate.push(1);
         epsilonRate.push(0);
       }
@@ -1035,14 +1035,13 @@ const binaryArray = `010000010010
     for (let strIter = 0; strIter < arr[0].length; strIter++){
       let ones = 0;
       let zeros = 0;
-      //if there are more ones's than zeros's remove the zeros's and visa versa
+      
       for(let i = 0; i<oxyRate.length; i++){ 
         if (oxyRate[i][strIter] === '1'){
           ones++
         } else { zeros++ }
       }
-      console.log(oxyRate)
-      //if more 1's than 0's remake the oxyRate arr before rerun
+     //if there are MORE ones's than zeros's remove the zeros's and visa versa
       if (ones>=zeros){
         oxyRate = oxyRate.filter(bin => bin[strIter] === '1');
       } else {
@@ -1056,21 +1055,21 @@ const binaryArray = `010000010010
     let CO2Rate = arr;
     
     for (let strIter = 0; strIter < arr[0].length; strIter++){
-      let x = 0;
-      let y = 0;
-      //if there are more x's than y's remove the y's and visa versa
+      let zeros = 0;
+      let ones = 0;
+      
       for(let i = 0; i<CO2Rate.length; i++){ 
         if (CO2Rate.length === 1) {
           console.log(`CO2 Rate --- binary: ${CO2Rate.join('')} decimal: ${parseInt(CO2Rate.join(''),2)}`)
         }
         else if (CO2Rate[i][strIter] === '1'){
-          x++
+          zeros++
         } else { 
-          y++ 
+          ones++ 
         }
       }
-      //if less 1's than 0's remake the CO2Rate arr before rerun
-      if (y<=x){
+      //if there are LESS ones' than zeros' remove the zeros' and visa versa
+      if (ones<=zeros){
         CO2Rate = CO2Rate.filter(bin => bin[strIter] === '0');
       } else {
         CO2Rate = CO2Rate.filter(bin => bin[strIter] === '1');
