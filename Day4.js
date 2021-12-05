@@ -47,19 +47,15 @@ function everyWinningCombo(bingoCards){
 
 function partOneAnswer(bingoCards, randomNumbers){
   const solutionsArr = everyWinningCombo(bingoCards);
-  let counter = 0;
   const numberArr = [];
   //find a match with random numbers being pushed to the array vs the solutions array, recheck with every new number added
   for(let i = 0; i<randomNumbers.length; i++){
     numberArr.push(randomNumbers[i])
     for(let j = 0; j<solutionsArr.length; j++){
-    counter++; 
     let checker = (numberArr, solutionsArr) => solutionsArr[j].every(nums => numberArr.includes(nums));
       if (checker(numberArr, solutionsArr)){
-        //some indexing math, take the modulo of counter and # of solutions to find exact solutions index
         //there are 10 solutions per card so if you divide by 10 you get the card index
-        solutionsIndex = (counter % solutionsArr.length); 
-        const finalCard = bingoCards[(Math.floor(solutionsIndex/10))].flat();
+        const finalCard = bingoCards[(j/10)].flat();
         //return all the numbers from the card that aren't in the random number array and add them together.
         const nonMatchingValues = finalCard.filter(num => !numberArr.includes(num));
         const addedNonMatching = nonMatchingValues.map(numStr => parseInt(numStr, 10)).reduce((acc,val) => acc+val);
