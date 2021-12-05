@@ -5,7 +5,7 @@ const textString = fs.readFileSync('Day4Input.txt').toString();
 [rando, ...allBoards] = textString.split('\n');
 
 randomNumbers = rando.split(',');
-//certainly a better way to do this, but i'm a noobie, just gonna push values to an array
+//certainly a better way to do this, just gonna push values to an array
 pushaT = allBoards.filter(String); 
 const allBoardsArr = [];
 for (let i = 0; i<pushaT.length; i++){
@@ -77,6 +77,7 @@ function partTwoAnswer(bingoCards, randomNumbers){
     counter++; 
     let checker = (numberArr, solutionsArr) => solutionsArr[j].every(nums => numberArr.includes(nums));
       if (checker(numberArr, solutionsArr)){
+        //base case - one card
         if (bingoCards.length === 1) {
           const finalCard = bingoCards.flat().flat();
           const nonMatchingValues = finalCard.filter(num => !numberArr.includes(num));
