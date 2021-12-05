@@ -2,8 +2,6 @@ const fs = require('fs')
 
 const fileInput = fs.readFileSync('./Day5Input.txt', 'utf-8');
 const inputSplit = fileInput.split(/\n|->|,/).map((numStr) => parseInt(numStr, 10));
-//extra undefined value on the end because ??
-inputSplit.pop();
 
 function ventField(numArr){
   const fieldArr = []; 
@@ -32,22 +30,18 @@ function ventField(numArr){
       const startingValueX = x1 < x2 ? x1 : x2
       let startingValueY = y1 < y2 ? y1 : y2
       for (let x = startingValueX; x<=(startingValueX+(Math.abs(x2-x1))); x++){
-        fieldArr[startingValueY][x] += 1
-        startingValueY++
+        fieldArr[startingValueY++][x] += 1
       }
     } else if (Math.abs(x1 - x2) === (Math.abs(y1-y2))){
       const startingValueX = x1 < x2 ? x1 : x2
       let startingValueY = y1 < y2 ? y2 : y1
       for (let x = startingValueX; x<=(startingValueX+(Math.abs(x2-x1))); x++){
-        fieldArr[startingValueY][x] += 1
-        startingValueY--
+        fieldArr[startingValueY--][x] += 1
       }
     }
   }
   //filter the array to only contain numbers greater than 1
   const overlappingLines = fieldArr.flat().filter(num=>num>1);
   return overlappingLines.length
-  
 }
 
-console.log(ventField(inputSplit));
