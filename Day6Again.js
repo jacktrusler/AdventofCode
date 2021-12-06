@@ -8,6 +8,7 @@ const fisholasCage = inputData.split(',').map(num=>parseInt(num, 10))
 //countingPerFeesh(3, 20, cache)
 
 //create a cache
+cache = {};
 function countingPerFeesh(fishAge,daysLeftToMultiply,cache){
   //base case
   
