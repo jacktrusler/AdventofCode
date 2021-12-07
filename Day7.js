@@ -9,30 +9,36 @@ const fuelUsed = crabPositions.reduce((acc, val) => acc + (Math.abs(median - val
 
 //Part 2
 
+
+// const averageMan = Math.floor((crabPositions.reduce((acc,val) => acc + val))/(crabPositions.length));
 function averageGet(arr){
-  const len = arr.length;
-    let sum = 0;
-    for (let i = 0; i<len; i++){
-      sum += arr[i];
-    }
-    return sum/len;
+  let acc = 0;
+  for (let i of arr) {
+    acc += i;
+  }
+  return acc / arr.length;
 }
 
 const average = Math.floor(averageGet(crabPositions))
 
 const fuelCost = (pos) => {
   const n = Math.abs(pos - average)
-  const stepwiseAddition = ((n+1))/2
-  return n * stepwiseAddition; 
+  stepWiseAddition = n * (n+1) / 2;
+  return stepWiseAddition; 
 }
 
+// const fuel = crabPositions.reduce((acc,val) => acc + fuelCost(val),0)
 function actualFuelUsed(arr) {
-  const len = arr.length;
-  let sum = 0;
-  for (let i = 0; i<len; i++){
-    sum = sum + fuelCost(arr[i]);
+  let acc = 0;
+  for (let i of arr) {
+    acc += fuelCost(i);
   }
-  return sum;
+  return acc;
 }
 
+
+
+const a = performance.now();
 console.log(actualFuelUsed(crabPositions));
+const b = performance.now();
+console.log('It took ' + (b - a) + ' ms.');
