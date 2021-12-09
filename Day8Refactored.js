@@ -15,7 +15,7 @@ function partTwo(inputArr){
     wireInput.push(inputArr[i].trim())
     }
   } 
-  //count characters in input, put values into letterKey that are known: only 1 letter that repeats 9,6, and 4 times
+  //count characters in input, put them in 'counts' dictionary
   const countChar = (str) => {
     const counts = {};
     strNoSpace = str.replace(/ /g, "");
@@ -28,7 +28,7 @@ function partTwo(inputArr){
     } 
     return counts;
   }
-
+  //each number is a unique sum, map sums to their corresponding numbers
   const addedNumbers = {
     '42': '0',
     '17': '1',
@@ -41,6 +41,7 @@ function partTwo(inputArr){
     '49': '8',
     '45': '9'
   }
+
   const finalArr = [];
   for (let i = 0; i<wireOutput.length; i++){
     let strArr = [];
@@ -51,16 +52,12 @@ function partTwo(inputArr){
     }
     finalArr.push(strArr.map(key => addedNumbers[key]).join(''));
   }
-
-  
-  const iterCount = countChar(wireInput[0])
-  console.log(finalArr)
-  
+  console.log(finalArr);
+  console.log(finalArr.map(str => parseInt(str, 10)).reduce((acc,val)=>acc+val,0))
 }
 
 const a = performance.now();
-
 partTwo(parseOnDelimiters)
-
 const b = performance.now();
+
 console.log('It took ' + (b - a) + ' ms.');
