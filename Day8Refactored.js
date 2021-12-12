@@ -1,33 +1,16 @@
 const fs = require('fs')
 
 const inputData = fs.readFileSync('./Day8Input.txt', 'utf-8'); 
-const parseOnDelimiters = inputData.split(/[\n|]/)
-const len = parseOnDelimiters.length
+const parseOnDelimiters = inputData.split('\n').map(line => line.split(' | '))
 
-function partTwo(inputArr){
-  //get the input and output arrays
-  const wireInput = [];
-  const wireOutput = [];
-  for (let i = 0; i<len; i++){
-    if (i % 2 === 1){
-      wireOutput.push(inputArr[i].trim())
-    } else if (i % 2 === 0) {
-    wireInput.push(inputArr[i].trim())
-    }
-  } 
+function partTwo(inputs){
   //count characters in input, put them in 'counts' dictionary
-  const countChar = (str) => {
-    const counts = {};
-    strNoSpace = str.replace(/ /g, "");
-    for (const s of strNoSpace) {
-      if (counts[s]) {
-        counts[s]++
-      } else {
-        counts[s] = 1
-      }
-    } 
-    return counts;
-  }
+  const makeFrequencyMap = (str) => 
+    [...str].reduce((map, c) => {
+      map[c] = (map[c] + 1 || 1);
+      return map
+    }, {});
+  
   //each number is a unique sum, map sums to their corresponding numbers
   const addedNumbers = {
     '42': '0',
@@ -40,24 +23,23 @@ function partTwo(inputArr){
     '25': '7',
     '49': '8',
     '45': '9'
-  }
+  };
 
-  const finalArr = [];
-  for (let i = 0; i<wireOutput.length; i++){
-    let strArr = [];
-    county = countChar(wireInput[i])
-    const newWireOutput = wireOutput[i].split(' ');
-    for (let j=0; j<4; j++){
-    strArr.push(String([...newWireOutput[j]].map(key => county[key]).reduce((acc,val) => acc + val,0)));
-    }
-    finalArr.push(strArr.map(key => addedNumbers[key]).join(''));
-  }
-  console.log(finalArr);
-  console.log(finalArr.map(str => parseInt(str, 10)).reduce((acc,val)=>acc+val,0))
+  return inputs.map(([wireIn, wireOut]) => {
+    const frequencyMap = makeFrequencyMap(wireIn);
+    return wireOut
+      .split(' ')
+      .map(output => [...output]
+          .map(char => frequencyMap[char])
+          .reduce((acc, val) => acc + val, 0))
+      .map(key => addedNumbers[String(key)])
+      .join('');
+  })
+  .reduce((acc, decodedOutput) => acc + parseInt(decodedOutput, 10), 0);
 }
 
 const a = performance.now();
-partTwo(parseOnDelimiters)
+console.log(partTwo(parseOnDelimiters));
 const b = performance.now();
 
 console.log('It took ' + (b - a) + ' ms.');
