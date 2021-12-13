@@ -12,29 +12,18 @@ b-end`
 
 exampleArr = exampleInput.split('\n')
 
-const directions = dataInput.split('\n');
+const directions = dataInput.split('\n')
 
-const isUpperCase = (string) => /^[A-Z]*$/.test(string)
-
-
+const paths = {}; 
 
 //build the cave system
 const caveLayout = (arr) => {
   const caveSystem = {};
   //make an object of directions the letter could point to
-  for (let entry of arr){
-    if (!caveSystem[entry.split('-')[0]]){  
-      caveSystem[entry.split('-')[0]] = [];
-    }
-    if (!caveSystem[entry.split('-')[1]]){
-      caveSystem[entry.split('-')[1]] = []; 
-    }
-    if (caveSystem[entry.split('-')[0]]){
-      caveSystem[entry.split('-')[0]].push(entry.split('-')[1]);
-    }
-    if (caveSystem[entry.split('-')[1]]){ 
-      caveSystem[entry.split('-')[1]].push(entry.split('-')[0]);
-    }
+  for (const line of arr) {
+    const [b, e] = line.split("-");
+    caveSystem[b] = [...(caveSystem[b] ?? []), e];
+    caveSystem[e] = [...(caveSystem[e] ?? []), b];
   }
   for (const [key,value] of Object.entries(caveSystem)){
     caveSystem[key] = value.filter(val => !val.includes('start'))
@@ -42,7 +31,9 @@ const caveLayout = (arr) => {
   return caveSystem;
 }
 
-//traverse the object
+console.log(caveLayout(exampleArr));
+
+//part 1
 const exploreCave1 = (cave, lowerCaveCache, caveSystem) => {
   if (cave === 'end'){
     return 1;
@@ -73,8 +64,7 @@ const exploreCave1 = (cave, lowerCaveCache, caveSystem) => {
     return sum; 
 }
 
-//console.log(exploreCave1('start',{},caveLayout(exampleArr)));
-
+//part 2
 const exploreCave2 = (cave, lowerCaveCache, caveSystem) => {
   if (cave === 'end'){
     return 1;
@@ -120,6 +110,3 @@ console.log(exploreCave2('start',{},caveLayout(directions)));
 
 const b = performance.now();
 console.log('It took ' + (b - a) + ' ms.');
-
-
-
