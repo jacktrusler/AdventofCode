@@ -858,6 +858,7 @@ function manualFolder(manual, instructions){
           }
         }
       }
+      
       console.log(dotCount);
       const letters = [];
       if (arrLen <= 6){
@@ -871,7 +872,7 @@ function manualFolder(manual, instructions){
           }
           }
           letters.push(row);
-          appendData(row);
+          //appendData(row);
 
         }
       }
@@ -880,12 +881,12 @@ function manualFolder(manual, instructions){
       //console.log(letters)
     }
   }
-  function appendData(data) {
-    const mainContainer = document.getElementById("myData");
-        const div = document.createElement("div");
-        div.innerText = data
-        mainContainer.appendChild(div);
-    }
+  // function appendData(data) {
+  //   const mainContainer = document.getElementById("myData");
+  //       const div = document.createElement("div");
+  //       div.innerText = data
+  //       mainContainer.appendChild(div);
+  //   }
   
   
 
@@ -894,4 +895,9 @@ function manualFolder(manual, instructions){
   
 }
 
+
+const a = performance.now();
 manualFolder(manualMaker(coordinates), foldInstructions); 
+const b = performance.now();
+console.log('It took ' + (b - a) + ' ms.');
+
